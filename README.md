@@ -25,7 +25,7 @@ run app
 
 You can pass an initialization vector (IV) in the multipart body using the `iv` field name:
 
-`HTTP.post('localhost:3000', form: { _rack_file_encryptor: [{ iv: '', file: File.open }] })`
+`HTTP.post('localhost:3000', form: { iv: '', file: File.open })`
 
 
 ## Limitations
