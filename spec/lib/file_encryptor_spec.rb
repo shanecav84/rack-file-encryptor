@@ -21,8 +21,8 @@ module Rack
       uploaded_file.rewind
 
       encrypted_file = Tempfile.new('encrypted')
-      allow_any_instance_of(described_class).
-        to receive(:create_tempfile).
+      allow_any_instance_of(Rack::FileEncryptor::UploadedFile).
+        to receive(:tempfile).
         and_return(encrypted_file)
 
       post '/', file: Rack::Test::UploadedFile.new(uploaded_file.path)
@@ -32,7 +32,7 @@ module Rack
       encrypted_file.rewind
       encrypted_contents = encrypted_file.read
 
-      decryption_cipher = OpenSSL::Cipher.new('aes-256-cbc')
+      decryption_cipher = OpenSSL::Cipher.new(Rack::FileEncryptor::DEFAULT_ALGORITHM)
       decryption_cipher.key = encryption_key
       decryption_cipher.update(encrypted_contents)
 
