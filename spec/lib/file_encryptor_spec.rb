@@ -33,6 +33,7 @@ module Rack
       encrypted_contents = encrypted_file.read
 
       decryption_cipher = OpenSSL::Cipher.new(Rack::FileEncryptor::DEFAULT_ALGORITHM)
+      decryption_cipher.decrypt
       decryption_cipher.key = encryption_key
       decryption_cipher.update(encrypted_contents)
 
